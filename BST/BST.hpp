@@ -10,7 +10,11 @@
 class BST {
     Node *parent{};
     Node *root{};
-    static void inorderTraversal(Node * head,int level) ;
+    static void inorderPrint(Node * head,int level);
+
+    static void inorderTraversal(Node * node);
+    void preorderTraversal(Node * node);
+    static void postorderTraversal(Node * node);
 
 public:
     BST()= default;
@@ -19,9 +23,10 @@ public:
     void display() const;
     void update(int oldValue, int newValue);
     ~BST();
-
     Node *search(int value);
     Node* operator[](int value);
+    BST(BST &Otree);
+
 
 
 

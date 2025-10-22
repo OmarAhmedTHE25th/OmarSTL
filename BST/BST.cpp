@@ -102,45 +102,7 @@ void BST::delete_node(int value) {
 
 
 BST::~BST() {
-    Node *temp = root;
-
-    Node *left = root->left;
-    Node *right = root->right;
-
-
-    while (temp->right != nullptr || temp->left != nullptr) {
-
-        while (left != nullptr) {
-
-            temp = left;
-            if (temp->right != nullptr) {
-
-                delete temp->right;
-
-            }
-
-
-            delete temp;
-            left = left->left;
-
-        }
-
-        while (right != nullptr) {
-            temp = right;
-            if (temp->left != nullptr) {
-
-                delete temp->left;
-
-            }
-
-            delete temp;
-
-            temp = right;
-            right = right->right;
-        }
-    }
-
-delete root;
+postorderTraversal(root);
 }
 
 void BST::update(int oldValue, int newValue) {
@@ -162,29 +124,61 @@ Node *BST::search(int value) {
     return  nullptr;
 }
 
+
+
+
 Node *BST::operator[](int value) {
     return search(value);
+}
+void BST::inorderTraversal(Node *node) {
+
+    if (node->right != nullptr && node->left != nullptr) return;
+    inorderTraversal(node->left);
+    cout << node->data << " ";
+    inorderTraversal(node->right);
+}
+
+
+void BST::postorderTraversal(Node *node) {
+    if (node->right != nullptr && node->left != nullptr) return;
+    postorderTraversal(node->left);
+    postorderTraversal(node->right);
+    delete node;
+}
+void BST::preorderTraversal(Node *node) {
+    if (node->right != nullptr && node->left != nullptr) return;
+    insert(node->data);
+    preorderTraversal(node->left);
+    preorderTraversal(node->right);
+
+}
+
+
+BST::BST(BST &Otree) {
+    if (Otree.root == nullptr) return;
+    root = Otree.root;
+    preorderTraversal(root);
 }
 
 
 
-void BST::inorderTraversal(Node * head, int level =0 ) {
+void BST::inorderPrint(Node * head, int level =0 ) {
 
 
 if (head == nullptr){return;}
 
-    inorderTraversal(head->right, level +1);
+    inorderPrint(head->right, level +1);
 
     for (int i = 0; i < level; ++i) {
         std::cout << "    "; // Indentation
     }
     cout << head->data << endl;
 
-    inorderTraversal(head->left,level +1);
+    inorderPrint(head->left,level +1);
 
 }
 void BST::display() const {
-    inorderTraversal(root);
+    inorderPrint(root);
 }
 
 
