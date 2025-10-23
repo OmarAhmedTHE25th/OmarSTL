@@ -35,11 +35,13 @@ int main() {
     mytree.insert(26);   // to mess with your left-right navigation
     mytree.insert(27);   // deeper still
     mytree.insert(28);   // deeper than before
-    mytree.insert(29);   // DEEPER
-mytree.display();
+    mytree.insert(29);// DEEPER
+
     cout << endl << endl;
 BST mytree2(mytree);
-    mytree2.display();
+    mytree.display();
+    cout << mytree.n << endl;
+   // mytree.printH();
 
 
     return 0;
