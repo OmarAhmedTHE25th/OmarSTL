@@ -22,7 +22,7 @@ class BST {
 
     Node* insertHelper(Node * node,int value);
     void printBST(Node* node, std::string prefix , bool isLeft ,bool isRoot) ;
-    static int findH(Node *node,int left,int right);
+     int findH(Node *node,int depth);
 
 public:
     BST()= default;

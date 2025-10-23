@@ -42,8 +42,6 @@ Node* BST::insertHelper(Node *node,int value) {
     if (value > node->data) return  insertHelper(node->right,value);
     return nullptr;
 }
-
-
 void BST::delete_node(int value) {
     if (root == nullptr)return;
 
@@ -96,14 +94,11 @@ void BST::delete_node(int value) {
 
     }
 }
-
-
 int BST::countNodes(Node* node) {
     if (node == nullptr)
         return 0;
     return 1 + countNodes(node->left) + countNodes(node->right);
 }
-
 void BST::printBST(Node* node, std::string prefix = "", bool isLeft = true, bool isRoot = true) {
     if (!node) return;
 
@@ -122,8 +117,6 @@ void BST::printBST(Node* node, std::string prefix = "", bool isLeft = true, bool
     if (node->left)
         printBST(node->left, prefix + (isRoot ? "" : (isLeft ? "|   " : "    ")), true, false);
 }
-
-
 BST::~BST() {
 postorderTraversal(root);
 }
@@ -191,19 +184,17 @@ if (head == nullptr){return;}
 void BST::display()  {
     printBST(root);
 }
-
-int BST::findH(Node *node, int left =0,int right=0) {
-    if (node->right == nullptr && node->left == nullptr) return 0;
-    int H= max(left,right)+1;
-    findH(node->left,left+1,right);
-    findH(node->right,right+1,left);
-
-
-    return  H;
-
+int BST::findH(Node *node,int depth=1) {
+    int H = 0;
+    if (node == nullptr) return 0;
+    if (node->right == nullptr && node->left == nullptr) return H;
+   int leftDepth= findH(node->left,depth+1);
+    int rightDepth = findH(node->right,depth+1);
+    H = max(leftDepth,rightDepth)+1;
+ return H;
 }
 void BST::printH() {
-    cout << findH(root,0,0) << endl;
+    cout << findH(root);
 }
 
 

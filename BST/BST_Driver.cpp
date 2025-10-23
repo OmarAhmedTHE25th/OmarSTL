@@ -42,9 +42,9 @@ int main() {
     mytree.delete_node(29);
     mytree.delete_node(90);
     mytree.delete_node(50);
-    cout << endl << endl;
-BST mytree2(mytree);
-
+    cout << endl;
+  mytree.printH();
+    cout << endl<< endl<< endl<< endl;
   mytree.display();
 
 
