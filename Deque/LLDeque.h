@@ -5,7 +5,6 @@
 #ifndef OMAR_STL_LLDEQUE_H
 #define OMAR_STL_LLDEQUE_H
 
-#include <inttypes.h>
 
 #include "Node.hpp"
 class LLDeque {

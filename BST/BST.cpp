@@ -6,6 +6,7 @@
 
 
 #include <format>
+#include <queue>
 
 #include "iostream"
 using namespace  std;
@@ -13,38 +14,36 @@ using namespace  std;
 //new is smaller go left
 //new is bigger go right
 
-void BST::insert(int value) {
+
+
+void BST::insertNode(int value) {
+    const auto newNode = new Node(value);
     if (root == nullptr) {
-        const auto newNode = new Node(value);
-        n++;
         root = newNode;
-        root->right = nullptr;
-        root->left = nullptr;
         return;
     }
-    const auto newNode = new Node(value);
-    n++;
-    Node *temp = root;
-
-
-
-    if (value <  temp->data)
-        while (temp->left != nullptr ) {
-        if (value <  temp->data){parent = temp; temp = temp->left;}
-            if (value > temp->data)break;
-        if (value == temp->data)return;
+    Node* temp = insertHelper(root,value);
+  if (temp == nullptr){cout << "Recursion Failed\n"; return;}
+    if (value > temp->data) {
+        temp->right = newNode;
+    }
+    if (value < temp->data) {
+        temp->left = newNode;
     }
 
-    if (value >  temp->data)
-    while (temp->right != nullptr ) {
-    if (value >  temp->data){ parent = temp; temp = temp->right;}
-        if (value < temp->data)break;
-    if (value == temp->data)return;
-}
-    if (value <  temp->data){parent = temp;temp->left = newNode;return;}
-    if (value >  temp->data) {parent = temp;temp->right = newNode;}
+
+
 
 }
+Node* BST::insertHelper(Node *node,int value) {
+    if (value < node->data && node->left == nullptr) return node;
+    if (value > node->data && node->right == nullptr) return node;
+    if (value < node->data)return  insertHelper(node->left,value);
+    if (value > node->data) return  insertHelper(node->right,value);
+    return nullptr;
+}
+
+
 void BST::delete_node(int value) {
     if (root == nullptr)return;
 
@@ -99,29 +98,38 @@ void BST::delete_node(int value) {
 }
 
 
-
-void BST:: printBST(Node* node, std::string prefix = "", bool isLeft = true) {
+int BST::countNodes(Node* node) {
     if (node == nullptr)
-        return;
+        return 0;
+    return 1 + countNodes(node->left) + countNodes(node->right);
+}
+
+void BST::printBST(Node* node, std::string prefix = "", bool isLeft = true, bool isRoot = true) {
+    if (!node) return;
 
     // Print right subtree first
-    printBST(node->right, prefix + (isLeft ? "│   " : "    "), false);
+    if (node->right)
+        printBST(node->right, prefix + (isRoot ? "" : (isLeft ? "|   " : "    ")), false, false);
 
     // Print current node
     std::cout << prefix;
-    std::cout << (isLeft ? "└── " : "┌── ");
-    std::cout << node->data<< std::endl;
+    if (isRoot)
+        std::cout << node->data << std::endl;   // Root has no prefix
+    else
+        std::cout << (isLeft ? "+-- " : "\\-- ") << node->data << std::endl;
 
     // Print left subtree
-    printBST(node->left, prefix + (isLeft ? "    " : "│   "), true);
+    if (node->left)
+        printBST(node->left, prefix + (isRoot ? "" : (isLeft ? "|   " : "    ")), true, false);
 }
+
 
 BST::~BST() {
 postorderTraversal(root);
 }
 void BST::update(int oldValue, int newValue) {
     delete_node(oldValue);
-    insert(newValue);
+    insertNode(newValue);
 }
 Node *BST::search(int value) {
     Node * temp = root;
@@ -155,7 +163,7 @@ void BST::postorderTraversal(Node *node) {
 }
 void BST::preorderTraversal(Node *node) {
     if (node->right != nullptr && node->left != nullptr) return;
-    insert(node->data);
+    insertNode(node->data);
     preorderTraversal(node->left);
     preorderTraversal(node->right);
 

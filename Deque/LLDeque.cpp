@@ -3,7 +3,7 @@
 //
 
 #include "LLDeque.h"
-
+#include "Node.hpp"
 #include <iostream>
 using namespace std;
 void LLDeque::pushFront(ElementType value) {
@@ -62,6 +62,7 @@ void LLDeque::popBack() {
 }
 void LLDeque::display() {
     Node *temp = head;
+
 
 
         for (int i=0; i<nodeN; i++) {
