@@ -12,7 +12,7 @@
 class BST {
     Node *parent{};
     Node *root{};
-
+    int H = 0;
 
     static void inorderPrint(Node * head,int level);
 

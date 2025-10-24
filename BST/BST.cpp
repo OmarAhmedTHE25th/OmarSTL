@@ -185,7 +185,7 @@ void BST::display()  {
     printBST(root);
 }
 int BST::findH(Node *node,int depth=1) {
-    int H = 0;
+    
     if (node == nullptr) return 0;
     if (node->right == nullptr && node->left == nullptr) return H;
    int leftDepth= findH(node->left,depth+1);
