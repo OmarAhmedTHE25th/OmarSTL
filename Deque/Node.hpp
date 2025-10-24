@@ -4,11 +4,12 @@
 
 #ifndef OMAR_STL_NODE_HPP
 #define OMAR_STL_NODE_HPP
+#include 
 
 typedef int ElementType;
 
 class Node {
-    ElementType data = 0;
+    Node *data = 0;
     Node *next{};
     Node *prev{};
     friend class LLDeque;

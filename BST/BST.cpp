@@ -6,11 +6,12 @@
 
 
 #include <format>
-#include <queue>
+
 
 #include "iostream"
 using namespace  std;
 #include "C:/Users/DELL/CLionProjects/Omar STL/LIST/DynamicList.h"
+#include "C:/Users/DELL/CLionProjects/Omar STL/LIST/DynamicList.cpp"
 //new is smaller go left
 //new is bigger go right
 
@@ -22,14 +23,24 @@ void BST::insertNode(int value) {
         root = newNode;
         return;
     }
+
     Node* temp = insertHelper(root,value);
-    parent = temp;
-  if (temp == nullptr){cout << "Recursion Failed\n"; return;}
+    newNode->parent = temp;
+    if (temp == nullptr){cout << "Recursion Failed\n"; return;}
     if (value > temp->data) {
         temp->right = newNode;
+
+
+     // H = findH(root,1);
+
+
+
+
+
     }
     if (value < temp->data) {
         temp->left = newNode;
+       // H = findH(root,1);
     }
 
 
@@ -43,94 +54,81 @@ Node* BST::insertHelper(Node *node,int value) {
     if (value > node->data) return  insertHelper(node->right,value);
     return nullptr;
 }
-void BST::delete_node(int value) {
+void BST::deleteNode(int value) {
     if (root == nullptr)return;
-
     Node *temp = root;
-    if (root->data == value) {
-        if (root->left == nullptr && root->right == nullptr) {delete temp;return;}
-        if (root->left == nullptr || root->right == nullptr) {
-            if (root->left != nullptr) {
-                root = root->left;
+    while (temp!= nullptr) {
+        if (value <  temp->data){ temp = temp->left;}
+
+        else if (value >  temp->data) {temp = temp->right;}
+
+        else if (value == temp->data){
+
+
+            if (temp->right && temp->left) {
+
+                Node *leftmost = temp->right;
+
+                while (leftmost->left != nullptr) {leftmost= leftmost->left;}
+                temp->data = leftmost->data;
+                if (leftmost->right) {
+                    if (leftmost == leftmost->parent->left) leftmost->parent->left = leftmost->right;
+                    else if (leftmost ==leftmost->parent->right) leftmost->parent->right = leftmost->right;
+                    leftmost->right->parent = leftmost->parent;
+                }
+                else if (!leftmost->right) {
+
+                   if (leftmost == leftmost->parent->left)  leftmost->parent->left = nullptr;
+                   else if (leftmost ==leftmost->parent->right) leftmost->parent->right = nullptr;
+
+                 }
+
+                delete leftmost;
+                return;
+            }
+
+            if (!temp ->right && !temp->left) {
+                if (temp == temp->parent->left) {
+                    temp->parent->left = nullptr;
+                } else {
+                    temp->parent->right = nullptr;
+                }
                 delete temp;
                 return;
             }
-            if (root->right != nullptr) {
-                root = root->right;
-                delete temp;
-                return;
+
+            Node* child = temp->left ? temp->left : temp->right;
+            if (temp == temp->parent->left) {
+                temp->parent->left = child;
+            } else {
+                temp->parent->right = child;
             }
-        }
-
-        Node *leftmost = root->right;
-        while (leftmost->left != nullptr) {parent = leftmost; leftmost= leftmost->left;}
-        parent->left = nullptr;
-        root = leftmost;
-        root->left = temp->left ;
-        root->right = temp->right ;
-        delete temp;
-
-        return;
-    }
-
-    while (temp->left != nullptr || temp->right != nullptr ) {
-        if (value <  temp->data){parent = temp; temp = temp->left;}
-
-        if (value >  temp->data) {parent = temp; temp = temp->right;}
-
-        if (value == temp->data) {
-
-            if (temp ->right == nullptr && temp->left == nullptr) {
-                if (value > parent->data) parent->right = nullptr;
-                if (value < parent->data) parent->left = nullptr;
-                delete temp;
-                return;
-            }
-            parent->right = temp->right;
-            parent->left = temp->left;
-
+            child->parent = temp->parent;
             delete temp;
             return;
         }
 
     }
+    cout << "Value Not found\n";
 }
 int BST::countNodes(Node* node) {
     if (node == nullptr)
         return 0;
     return 1 + countNodes(node->left) + countNodes(node->right);
 }
-void BST::printBST(Node* node, std::string prefix = "", bool isLeft = true, bool isRoot = true) {
-    if (!node) return;
-
-    // Print right subtree first
-    if (node->right)
-        printBST(node->right, prefix + (isRoot ? "" : (isLeft ? "|   " : "    ")), false, false);
-
-    // Print current node
-    std::cout << prefix;
-    if (isRoot)
-        std::cout << node->data << std::endl;   // Root has no prefix
-    else
-        std::cout << (isLeft ? "+-- " : "\\-- ") << node->data << std::endl;
-
-    // Print left subtree
-    if (node->left)
-        printBST(node->left, prefix + (isRoot ? "" : (isLeft ? "|   " : "    ")), true, false);
-}
 BST::~BST() {
 postorderTraversal(root);
 }
 void BST::update(int oldValue, int newValue) {
-    delete_node(oldValue);
+    deleteNode(oldValue);
     insertNode(newValue);
 }
 Node *BST::search(int value) {
     Node * temp = root;
     while (temp->left != nullptr || temp->right != nullptr ) {
-        if (value <  temp->data){parent = temp; temp = temp->left;}
+        if (value <  temp->data){temp->parent = temp; temp = temp->left;}
 
-        if (value >  temp->data) {parent = temp; temp = temp->right;}
+        if (value >  temp->data) {temp->parent= temp; temp = temp->right;}
 
         if (value == temp->data) {
             return  temp;
@@ -145,7 +143,7 @@ void BST::inorderTraversal(Node *node) {
     DynamicList list;
     if (node->right != nullptr && node->left != nullptr) return;
     inorderTraversal(node->left);
-    list.insertEnd(node->data);
+    list.insertEnd(node);
     inorderTraversal(node->right);
 }
 void BST::postorderTraversal(Node *node) {
@@ -183,8 +181,34 @@ if (head == nullptr){return;}
 
 }
 void BST::display()  {
-    printBST(root);
+    print(root);
 }
+void BST::print(Node *node) {
+
+        if (node == nullptr) return; // base case
+
+        // left subtree first
+
+             cout << "Node: " << node->data
+             << " | Parent: " << (node->parent ? to_string(node->parent->data) : "NULL")
+             << " | Left: " << (node->left ? to_string(node->left->data) : "NULL")
+             << " | Right: " << (node->right ? to_string(node->right->data) : "NULL")
+             << endl << endl;
+        print(node->left);
+        print(node->right); // right subtree next
+
+
+}
+
+
+
+
+
+
+
+
+
+
 int BST::findH(Node *node,int depth=1) {
     
     if (node == nullptr) return 0;
@@ -196,6 +220,15 @@ int BST::findH(Node *node,int depth=1) {
 }
 void BST::printH() {
     cout << findH(root);
+}
+ElementType BST::BuildBalanced(DynamicList list) {
+    if (list.Size()== 0) return nullptr;
+    int cent = list.Size() /2;
+    Node*root =list[cent];
+    root->left = BuildBalanced(list.subList(0,cent));
+
+
+
 }
 
 

@@ -79,20 +79,17 @@ void DynamicList::erase(int pos) {
      elementN--;
 
 }
-ElementType DynamicList::search(int pos) {
+ElementType DynamicList::search(int pos) const {
      if (pos>elementN|| pos <0) {
          cout <<  "[[ERROR]] Invalid Position\n";
-         return 0;
+         return nullptr;
      }
      return list[pos];
 }
-
 void DynamicList::insertEnd(ElementType value) {
     insert(elementN,value);
 }
-
-
-void DynamicList::update(const int pos, const ElementType value) {
+void DynamicList::update(const int pos,  ElementType value) {
 if (elementN == 0){cout<<"Empty List! Nothing to update\n"; return;}
 
 
@@ -107,14 +104,10 @@ if (elementN == 0){cout<<"Empty List! Nothing to update\n"; return;}
          if ( i == pos){list[i] = value;  return;}
      }
 }
-
-DynamicList::DynamicList(DynamicList &Olist) {
-
-
+DynamicList::DynamicList(const DynamicList &Olist) {
     for (int i = 0; i < Olist.elementN; i++) {
-
             insert(i,Olist.search(i));
-            if (i >=10) {
+            if (i >=size) {
                 insert(i,Olist.search(i));
             }
 
@@ -124,7 +117,6 @@ ElementType DynamicList::operator[](int index) {
 
     return search(index);
 }
-
 DynamicList DynamicList::operator=( DynamicList &list1) {
 if (elementN == 0) for (int i = 0; i < list1.elementN; i++) insert(i,list1.search(i));
      while (list1.elementN < elementN) {
@@ -138,10 +130,22 @@ if (elementN == 0) for (int i = 0; i < list1.elementN; i++) insert(i,list1.searc
      }
  if (this == &list1)return*this;
 }
-
-int DynamicList::getSize() const {
+int DynamicList::Size() const {
      return elementN;
  }
+
+DynamicList DynamicList::subList(int beg, int lim) {
+    DynamicList newList(*this);
+     for (int i =0; i < beg; i++) {
+         newList.erase(0);
+     }
+     for (int i = elementN-1; i >=lim; i--) {
+         newList.erase(i);
+     }
+
+     return newList;
+}
+
 
 
 

@@ -4,11 +4,11 @@
 
 #ifndef LINKED_LIST_NODE_H
 #define LINKED_LIST_NODE_H
+#include 
 
 
 class Node {
-
-    int data = 0;
+    Node *data = 0;
     Node *next{};
     Node()= default;
     explicit Node(const int data): data(data){}

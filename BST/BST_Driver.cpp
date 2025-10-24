@@ -36,14 +36,16 @@ int main() {
     mytree.insertNode(27);   // deeper still
     mytree.insertNode(28);   // deeper than before
     mytree.insertNode(29);// DEEPER
-     mytree.delete_node(26);
-    mytree.delete_node(30);
-    mytree.delete_node(40);
-    mytree.delete_node(29);
-    mytree.delete_node(90);
-    mytree.delete_node(50);
+
+    //
+    //   mytree.deleteNode(26);
+    //   mytree.deleteNode(30);
+    //   mytree.deleteNode(40);
+    //  mytree.deleteNode(29);
+    // mytree.deleteNode(90);
+    mytree.deleteNode(50);
     cout << endl;
-  mytree.printH();
+ // mytree.printH();
     cout << endl<< endl<< endl<< endl;
   mytree.display();
 

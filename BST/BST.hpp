@@ -6,12 +6,12 @@
 #define OMAR_STL_BST_HPP
 
 #include <string>
-
 #include "Node.h"
+#include "C:/Users/DELL/CLionProjects/Omar STL/LIST/DynamicList.h"
 
 class BST {
-    Node *parent{};
     Node *root{};
+
     int H = 0;
     int leftDepth=0;
     int rightDepth =0;
@@ -20,13 +20,12 @@ class BST {
     void preorderTraversal(Node * node);
     static void postorderTraversal(Node * node);
     Node* insertHelper(Node * node,int value);
-    void printBST(Node* node, std::string prefix , bool isLeft ,bool isRoot) ;
      int findH(Node *node,int depth);
-
+    void print(Node* node);
 public:
     BST()= default;
     void insertNode(int value);
-    void delete_node(int value);
+    void deleteNode(int value);
     void display() ;
     void update(int oldValue, int newValue);
     ~BST();
@@ -35,6 +34,9 @@ public:
     BST(BST &Otree);
     void printH();
     int countNodes(Node* node);
+    ElementType BuildBalanced( DynamicList list);
+
+friend class BST;
 
 
 

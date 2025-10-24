@@ -1,0 +1,25 @@
+ if (root->data == value) {
+        if (root->left == nullptr && root->right == nullptr) {delete temp;return;}
+        if (root->left == nullptr || root->right == nullptr) {
+            if (root->left != nullptr) {
+                root = root->left;
+                delete temp;
+                return;
+            }
+            if (root->right != nullptr) {
+                root = root->right;
+                delete temp;
+                return;
+            }
+        }
+
+        Node *leftmost = root->right;
+        while (leftmost->left != nullptr) {leftmost->parent = leftmost; leftmost= leftmost->left;}
+        leftmost->parent->left = nullptr;
+        root = leftmost;
+        root->left = temp->left ;
+        root->right = temp->right ;
+        delete temp;
+
+        return;
+    }

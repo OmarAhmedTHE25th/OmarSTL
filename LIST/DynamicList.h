@@ -13,7 +13,7 @@ class DynamicList {
     int size =10;
     ElementType *list = new ElementType[size]{nullptr};
     int elementN = 0;
-    ElementType search(int pos);
+    [[nodiscard]] ElementType search(int pos)const;
 public:
     void insert(int pos,ElementType value);
     void insertEnd(ElementType value);
@@ -21,11 +21,13 @@ public:
     void update(int pos, ElementType value);
     friend std::ostream& operator<<(std::ostream& stream , const DynamicList &olist);
     friend DynamicList operator+(const DynamicList &list1,const DynamicList &list2);
-    DynamicList(DynamicList &Olist);
+    DynamicList(const DynamicList &Olist);
     DynamicList() = default;
    DynamicList operator=(DynamicList &list1);
    ElementType operator[](int index);
-    int getSize() const;
+    [[nodiscard]] int Size() const;
+
+    DynamicList subList(int beg, int lim);
 ~DynamicList();
 };
 
