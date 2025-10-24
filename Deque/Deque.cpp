@@ -41,7 +41,7 @@ Deque::~Deque() {
 void Deque::pushBack(ElementType value) {
 
     if (elementN>=size) {
-        size *=2;
+        while (elementN>=size)size *=2;
 
         auto *newlist = new ElementType[size]{};
 

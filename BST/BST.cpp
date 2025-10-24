@@ -10,7 +10,7 @@
 
 #include "iostream"
 using namespace  std;
-
+#include "C:/Users/DELL/CLionProjects/Omar STL/LIST/DynamicList.h"
 //new is smaller go left
 //new is bigger go right
 
@@ -23,6 +23,7 @@ void BST::insertNode(int value) {
         return;
     }
     Node* temp = insertHelper(root,value);
+    parent = temp;
   if (temp == nullptr){cout << "Recursion Failed\n"; return;}
     if (value > temp->data) {
         temp->right = newNode;
@@ -141,10 +142,10 @@ Node *BST::operator[](int value) {
     return search(value);
 }
 void BST::inorderTraversal(Node *node) {
-
+    DynamicList list;
     if (node->right != nullptr && node->left != nullptr) return;
     inorderTraversal(node->left);
-    cout << node->data << " ";
+    list.insertEnd(node->data);
     inorderTraversal(node->right);
 }
 void BST::postorderTraversal(Node *node) {
@@ -188,8 +189,8 @@ int BST::findH(Node *node,int depth=1) {
     
     if (node == nullptr) return 0;
     if (node->right == nullptr && node->left == nullptr) return H;
-   int leftDepth= findH(node->left,depth+1);
-    int rightDepth = findH(node->right,depth+1);
+    leftDepth= findH(node->left,depth+1);
+     rightDepth = findH(node->right,depth+1);
     H = max(leftDepth,rightDepth)+1;
  return H;
 }

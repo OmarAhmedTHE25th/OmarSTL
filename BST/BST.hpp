@@ -13,13 +13,12 @@ class BST {
     Node *parent{};
     Node *root{};
     int H = 0;
-
+    int leftDepth=0;
+    int rightDepth =0;
     static void inorderPrint(Node * head,int level);
-
-    static void inorderTraversal(Node * node);
+    void inorderTraversal(Node * node);
     void preorderTraversal(Node * node);
     static void postorderTraversal(Node * node);
-
     Node* insertHelper(Node * node,int value);
     void printBST(Node* node, std::string prefix , bool isLeft ,bool isRoot) ;
      int findH(Node *node,int depth);

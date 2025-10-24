@@ -19,8 +19,10 @@ class Node {
 
 
     public:
-        explicit Node (const int data);
+        explicit Node (int data);
+    Node()=default;
         friend class BST;
+    friend class DynamicList;
     };
  // std
 
