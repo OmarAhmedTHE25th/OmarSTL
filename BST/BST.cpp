@@ -29,15 +29,15 @@ void BST::insertNode(int value) {
 
     Node* temp = insertHelper(root,value);
     newNode->parent = temp;
-    if (temp == nullptr){cout << "Recursion Failed\n"; return;}
+    if (temp == nullptr){cout << "Recursion Failed at Node : "; return;}
     if (value > temp->data) {
         temp->right = newNode;
+        n++;
 
         }
     if (value < temp->data) {
         temp->left = newNode;
-
-
+        n++;
     }
     Node* up = newNode;
     DynamicList sortedList;
