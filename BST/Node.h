@@ -9,7 +9,7 @@
 
 
 class Node {
-        int data = 0;
+       int data = 0;
         Node *left{};
         Node *right{};
         Node*parent{};

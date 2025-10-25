@@ -16,12 +16,13 @@ class BST {
     int leftDepth=0;
     int rightDepth =0;
     static void inorderPrint(Node * head,int level);
-    void inorderTraversal(Node * node);
+    void inorderTraversal(Node * node,DynamicList &list);
     void preorderTraversal(Node * node);
     static void postorderTraversal(Node * node);
     Node* insertHelper(Node * node,int value);
      int findH(Node *node,int depth);
     void print(Node* node);
+    double n = 0;
 public:
     BST()= default;
     void insertNode(int value);
@@ -33,9 +34,9 @@ public:
     Node* operator[](int value);
     BST(BST &Otree);
     void printH();
-    int countNodes(Node* node);
-    ElementType BuildBalanced( DynamicList list);
 
+    double countNodes(Node* node);
+    ElementType BuildBalancedFromList(DynamicList &list,int start,int end);
 friend class BST;
 
 

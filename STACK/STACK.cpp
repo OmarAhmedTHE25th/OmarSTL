@@ -26,7 +26,7 @@ std::ostream& operator<< (std::ostream& stream, const STACK& stack) {
     return stream;
 
 }
-void STACK::push(const int value)  {
+void STACK::push(const ElementType value)  {
 
     if (isEmpty()) {
         stack[0] = value;
@@ -57,7 +57,7 @@ int STACK::getSize() const {
 bool STACK::isEmpty() const {
     return elementN ==0;
 }
-int STACK::peek() const {
+ElementType STACK::peek() const {
     return stack[0];
 }
 STACK::STACK(STACK &stack) {

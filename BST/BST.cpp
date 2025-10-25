@@ -6,12 +6,15 @@
 
 
 #include <format>
+#include <print>
+
 
 
 #include "iostream"
 using namespace  std;
 #include "C:/Users/DELL/CLionProjects/Omar STL/LIST/DynamicList.h"
 #include "C:/Users/DELL/CLionProjects/Omar STL/LIST/DynamicList.cpp"
+
 //new is smaller go left
 //new is bigger go right
 
@@ -30,21 +33,36 @@ void BST::insertNode(int value) {
     if (value > temp->data) {
         temp->right = newNode;
 
-
-     // H = findH(root,1);
-
-
-
-
-
-    }
+        }
     if (value < temp->data) {
         temp->left = newNode;
-       // H = findH(root,1);
+
+
     }
+    Node* up = newNode;
+    DynamicList sortedList;
+    while (up) {
+        int left = countNodes(up->left);
+        int right = countNodes(up->right);
+        int total = left + right + 1;
+        int maxChild = std::max(left, right);
+        if ( double alpha = 0.7; static_cast<double>(maxChild) / total > alpha) {
 
 
 
+            inorderTraversal(up, sortedList);
+            Node* balanced = BuildBalancedFromList(sortedList,0, sortedList.Size() - 1);
+
+            balanced->parent = up->parent;
+
+            if (!up->parent) root = balanced;
+            else if (up == up->parent->left) up->parent->left = balanced;
+            else up->parent->right = balanced;
+
+            return;
+        }
+        up = up->parent;
+    }
 
 }
 Node* BST::insertHelper(Node *node,int value) {
@@ -84,6 +102,7 @@ void BST::deleteNode(int value) {
                  }
 
                 delete leftmost;
+                n--;
                 return;
             }
 
@@ -94,6 +113,7 @@ void BST::deleteNode(int value) {
                     temp->parent->right = nullptr;
                 }
                 delete temp;
+                n--;
                 return;
             }
 
@@ -105,17 +125,18 @@ void BST::deleteNode(int value) {
             }
             child->parent = temp->parent;
             delete temp;
+            n--;
             return;
         }
 
     }
     cout << "Value Not found\n";
 }
-int BST::countNodes(Node* node) {
-    if (node == nullptr)
-        return 0;
+double BST::countNodes(Node* node) {
+    if (node == nullptr)return 0;
     return 1 + countNodes(node->left) + countNodes(node->right);
 }
+
 BST::~BST() {
 postorderTraversal(root);
 }
@@ -139,16 +160,19 @@ Node *BST::search(int value) {
 Node *BST::operator[](int value) {
     return search(value);
 }
-void BST::inorderTraversal(Node *node) {
-    DynamicList list;
-    if (node->right != nullptr && node->left != nullptr) return;
-    inorderTraversal(node->left);
+void BST::inorderTraversal(Node *node,DynamicList &list) {
+    if (node == nullptr) return;
+    inorderTraversal(node->left,list);
+
     list.insertEnd(node);
-    inorderTraversal(node->right);
+
+    inorderTraversal(node->right,list);
+
 }
 void BST::postorderTraversal(Node *node) {
-    if (node->right != nullptr && node->left != nullptr) return;
-
+    if (node == nullptr) {
+        return;
+    }
     postorderTraversal(node->left);
     postorderTraversal(node->right);
     delete node;
@@ -199,36 +223,43 @@ void BST::print(Node *node) {
 
 
 }
-
-
-
-
-
-
-
-
-
-
 int BST::findH(Node *node,int depth=1) {
-    
     if (node == nullptr) return 0;
     if (node->right == nullptr && node->left == nullptr) return H;
     leftDepth= findH(node->left,depth+1);
      rightDepth = findH(node->right,depth+1);
-    H = max(leftDepth,rightDepth)+1;
+   int H = max(leftDepth,rightDepth)+1;
  return H;
 }
 void BST::printH() {
     cout << findH(root);
 }
-ElementType BST::BuildBalanced(DynamicList list) {
-    if (list.Size()== 0) return nullptr;
-    int cent = list.Size() /2;
-    Node*root =list[cent];
-    root->left = BuildBalanced(list.subList(0,cent));
+
+ElementType BST::BuildBalancedFromList(DynamicList &list,int start,int end) {
+
+    if (start > end) { // Base case
+        return nullptr;
+    }
+    int cent = start + (end - start) / 2;
+    Node* Nroot = new Node(*list[cent]); // make a copy, not reuse
+
+    Nroot->left = nullptr;
+    Nroot->right = nullptr;
+    Nroot->parent = nullptr;
+    Nroot -> left = BuildBalancedFromList(list,start,cent-1);
+
+    Nroot->right = BuildBalancedFromList(list,cent+1,end);
+
+    if (Nroot->left) {
+        Nroot->left->parent = Nroot;
+    }
+    if (Nroot->right) {
+        Nroot->right->parent = Nroot;
+    }
 
 
 
+    return  Nroot;
 }
 
 
