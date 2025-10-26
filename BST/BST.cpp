@@ -2,19 +2,17 @@
 // Created by DELL on 10/22/2025.
 //
 
+
 #include "BST.hpp"
 
+#include <algorithm>
+#include <string>
+#include <iostream>
 
-#include <format>
-#include <print>
-
-
-
-#include "iostream"
 using namespace  std;
+
 #include "C:/Users/DELL/CLionProjects/Omar STL/LIST/DynamicList.h"
 #include "C:/Users/DELL/CLionProjects/Omar STL/LIST/DynamicList.cpp"
-
 //new is smaller go left
 //new is bigger go right
 
@@ -46,7 +44,7 @@ void BST::insertNode(int value) {
         int right = countNodes(up->right);
         int total = left + right + 1;
         int maxChild = std::max(left, right);
-        if ( double alpha = 0.7; static_cast<double>(maxChild) / total > alpha) {
+        if ( static_cast<double>(maxChild) / total > 0.7) {  //
 
 
 
