@@ -21,6 +21,15 @@ All data structures are implemented entirely from scratch, without using any pre
 * **Deque (Double-Ended Queue)** — efficient O(1) operations for both ends.
 * **Mini Vector (List)** — a simplified dynamic array supporting resizing and element access.
 * **Binary Search Tree (BST)** — complete with insertion, deletion, search, traversal, update, copy constructor, and destructor.
+* **HashMap** — a fully templated hash map supporting:
+
+  * CRUD operations (`set`, `operator[]`, `remove`)
+  * Key existence checks (`contains`, `findKey`)
+  * Size and empty state (`size`, `Empty`, `maxSize`)
+  * Copy constructor and assignment operator
+  * Merging maps with `+` operator
+  * Stream output via `<<`
+  * Dynamic resizing and automatic bucket growth
 
 ---
 
@@ -31,6 +40,7 @@ All data structures are implemented entirely from scratch, without using any pre
 * Copy constructors and destructors implemented for safe deep copying and cleanup.
 * Separate driver files (`*_Driver.cpp`) for isolated testing and demonstration.
 * No recursion used where iterative logic provides more control and efficiency.
+* Template-based HashMap implementation, mimicking STL `std::map` functionality.
 
 ---
 
@@ -43,11 +53,13 @@ OmarSTL/
 ├── Deque.hpp
 ├── List.hpp
 ├── BST.hpp
+├── HashMap.hpp
 ├── LinkedList_Driver.cpp
 ├── Stack_Driver.cpp
 ├── Deque_Driver.cpp
 ├── List_Driver.cpp
 ├── BST_Driver.cpp
+├── HashMap_Driver.cpp
 └── README.md
 ```
 
@@ -58,6 +70,7 @@ OmarSTL/
 * Strengthen understanding of low-level memory management in C++.
 * Practice building reusable, efficient, and clean object-oriented code.
 * Gain insight into how STL containers are designed and optimized.
+* Explore template programming and custom hash functions through the HashMap.
 
 ---
 
@@ -66,17 +79,19 @@ OmarSTL/
 1. Clone the repository:
 
    ```bash
-   git clone https:/OmarAhmedTHE25th/github.com//OmarSTL.git
+   git clone https://github.com/OmarAhmedTHE25th/OmarSTL.git
    ```
+
 2. Compile any driver you want to test:
 
    ```bash
-   g++ BST_Driver.cpp -o BST
+   g++ HashMap_Driver.cpp -o HashMap
    ```
+
 3. Run the executable:
 
    ```bash
-   ./BST
+   ./HashMap
    ```
 
 ---
