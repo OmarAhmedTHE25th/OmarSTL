@@ -102,21 +102,43 @@ public:
 return false;
     }
     int size(){return Buckets.size();};
-    int MaxSize(){return Buckets.capacity();}
+    int maxSize(){return Buckets.capacity();}
     bool Empty() {return Buckets.empty();}
-    void DeleteByidx(const int idx) {
+    void remove(const int idx) {
         for (int i =0; i < Buckets.size(); i++)
             {
             if (idx==i) {Buckets.erase(Buckets.begin() + i);
             return;}
             }
 
-        cout << "Index not found";
+        cout << "Index not found\n";
+    }
+    HashMap(const HashMap& other) {
+    Buckets = other.Buckets;
+}
+    HashMap& operator=(const HashMap& other) {
+    if (this != &other) {
+        Buckets = other.Buckets;
+    }
+    return *this;
+}
+    friend ostream& operator<<(ostream& os, const HashMap<int, string>& map){
+        for (const auto& bucket : map.Buckets) {
+            os << "Key: " << bucket.key << ", Value: " << bucket.value << endl;
+        }
+        return os;
     }
 
 
+    HashMap operator+( HashMap& map) {
+        HashMap newMap;
+        for (int i =0; i<size(); i++)newMap.Buckets.push_back(this->Buckets[i]);
+       for (int i =0; i<map.size(); i++) newMap.Buckets.push_back(map.Buckets[i]);
 
+        return newMap;
+    }
 };
+
 
 
 #endif //OMAR_STL_HASHMAP_HPP
