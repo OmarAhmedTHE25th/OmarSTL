@@ -57,6 +57,12 @@ public:
        Bucket newBucket;
         newBucket.key = ourKey;
         newBucket.value = value;
+        for (int i =0; i<Buckets.size();i++) {
+            if (Buckets[i].key == key) {
+                Buckets[i].value = value;
+                return;
+            }
+        }
         Buckets.push_back(newBucket);
     }
     HashMap()=default;

@@ -16,7 +16,7 @@ std::string name = "Omar";
     map.set(1, "Ali");  // overwrite previous value
 
     if (map[1] == "Ali") std::cout << "Overwrite Pass\n";
-    map[99] = "NewValue"; // creates a new key if it didn't exist
+    //map[99] = "NewValue"; // creates a new key if it didn't exist
 
    // std::cout << "map[99] = " << map[99] << std::endl;
 
