@@ -57,22 +57,25 @@ public:
        Bucket newBucket;
         newBucket.key = ourKey;
         newBucket.value = value;
-        for (int i =0; i<Buckets.size();i++) {
-            if (Buckets[i].key == key) {
-                Buckets[i].value = value;
-                return;
-            }
+        int i = findKey(key);
+        if (i != -1) {
+            Buckets[i].value = value;
+            return;
         }
+
         Buckets.push_back(newBucket);
     }
     HashMap()=default;
-    ValueType operator[](KeyType key) {
-        for (int i=0; i <Buckets.size();i++) {
-            if (Buckets[i].key == key) {
-                return Buckets[i].value;
-            }
-        }
-        throw std::runtime_error("Key Not found\n");
+    ValueType& operator[](KeyType key) {
+       int idx = findKey(key);
+        if (idx != -1)return Buckets[idx].value;
+
+        set(key,ValueType());
+        for (int i=0; i<Buckets.size();i++)
+        { if (Buckets[i].key == key) {
+            return Buckets[i].value;
+        }}
+        throw std::runtime_error("operator[] insertion failed");
     }
     void Display()
     {
@@ -80,6 +83,38 @@ public:
             cout << "Bucket " << i << ". Key: "<<Buckets[i].key << " Value: " << Buckets[i].value << endl;
         }
     }
+    void Delete(KeyType key) {
+       int i =findKey(key);
+       if (i != -1){Buckets.erase(Buckets.begin() + i);return;}
+        cout << "key Not found\n";
+    }
+    int findKey(KeyType key) {
+        for (int i=0; i<Buckets.size(); i++)
+        if (Buckets[i].key==key) return i;
+
+    return -1;
+    }
+    void clear()
+    {Buckets.clear();}
+    bool contains(KeyType key) {
+        int i =findKey(key);
+        if (i != -1)return true;
+return false;
+    }
+    int size(){return Buckets.size();};
+    int MaxSize(){return Buckets.capacity();}
+    bool Empty() {return Buckets.empty();}
+    void DeleteByidx(const int idx) {
+        for (int i =0; i < Buckets.size(); i++)
+            {
+            if (idx==i) {Buckets.erase(Buckets.begin() + i);
+            return;}
+            }
+
+        cout << "Index not found";
+    }
+
+
 
 };
 

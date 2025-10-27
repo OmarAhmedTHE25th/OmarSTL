@@ -16,6 +16,9 @@ std::string name = "Omar";
     map.set(1, "Ali");  // overwrite previous value
 
     if (map[1] == "Ali") std::cout << "Overwrite Pass\n";
+    map[99] = "Hello, World!";
+    map.Delete(99);
+    map.DeleteByidx(1);
 
 
     map.Display();
